@@ -15,26 +15,44 @@
 
 window.addEventListener('DOMContentLoaded', async function() {
   // Get a reference to the "get weather" button
+  let weatherButton = document.querySelector(`button`) 
 
   // When the "get weather" button is clicked:
-
+  weatherButton.addEventListener(`click`, async function(event) {
     // - Ignore the default behavior of the button
+    event.preventDefault()
 
     // - Get a reference to the element containing the user-entered location
-
+    let location = document.querySelector(`#location`)
+    let days = document.querySelector(`#days`)
     // - Get the user-entered location from the element's value
+    let locationDetail = location.value 
+    let dayDetail = days.value 
 
     // - Check to see if the user entered anything; if so:
+    if (locationDetail.length>0 && dayDetail.length>0) {
 
       // - Construct a URL to call the WeatherAPI.com API
+      let url = `https://api.weatherapi.com/v1/forecast.json?key=7093341bf2494500ae9155303212704&q=${locationDetail}&days=3`
 
       // - Fetch the url, wait for a response, store the response in memory
+      let response = await fetch(url)
 
       // - Ask for the json-formatted data from the response, wait for the data, store it in memory
+      let json = await response.json() 
 
       // - Write the json-formatted data to the JavaScript console
+      console.log(json)
 
       // - Store the interpreted location, current weather conditions, the forecast as three separate variables
+      let locationData = json.location
+      let weatherCurrent = json.current 
+      let weatherForecast = json.forecast
+        // note - ^ above json locations do not appear detailed enough --- will return entire categories of json data, not just one value
 
       // - Continue the recipe yourself!
+      // <---- W5 LAB END. BEGIN W5 HW ---->
+    
+    }
+  })
 })
